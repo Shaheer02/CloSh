@@ -1,7 +1,7 @@
 # CloSh
-## This project is clone shell (closh) designed using C
+### This project is a clone shell (closh) designed using C
 <br/>
-# Members' Contributions
+## Members' Contributions
 Shaheer: 
 Erik:
 Mike:
