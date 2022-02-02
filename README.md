@@ -1,8 +1,10 @@
 # CloSh
 ### This project is a clone shell (closh) designed using C
 <br/>
-## Members' Contributions
+## Team Members' Contributions
 <br/>
-Shaheer: 
+Shaheer:
+<br/>
 Erik:
+<br/>
 Mike:
