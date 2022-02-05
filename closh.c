@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <math.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -56,18 +57,38 @@ int main() {
         // end parsing code
         
         
+
+
         ////////////////////////////////////////////////////////
         //                                                    //
         // TODO: use cmdTokens, count, parallel, and timeout  //
         // to implement the rest of closh                     //
         //                                                    //
         // /////////////////////////////////////////////////////
-        
+
+        /***** BEGIN TODO *****/
+        if(parallel){  // Running the programs in parallel
+        for(int i=0; i<count; i++)   { 
+            if(fork()==0){   // call fork() and check if we are currently in the child process
+                execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
+                exit(0);  // Exit out of the child process
+            }
+            } 
+         
+        }   
+
+        else if(!parallel){ // Run sequentially 
+    
+            
+        }
+
+
+       // execvp(cmdTokens[0], cmdTokens);
         // just executes the given command once - REPLACE THIS CODE WITH YOUR OWN
-        execvp(cmdTokens[0], cmdTokens); // replaces the current process with the given program
+         // replaces the current process with the given program
         // doesn't return unless the calling failed
-        printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
-        exit(1);        
+      //  printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
+        //exit(1);        
     }
 }
 
