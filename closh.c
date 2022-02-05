@@ -81,14 +81,14 @@ int main() {
     
             
         }
-
+        exit(0);    // Exiting out of the shell
 
        // execvp(cmdTokens[0], cmdTokens);
         // just executes the given command once - REPLACE THIS CODE WITH YOUR OWN
          // replaces the current process with the given program
         // doesn't return unless the calling failed
       //  printf("Can't execute %s\n", cmdTokens[0]); // only reached if running the program failed
-        //exit(1);        
+            
     }
 }
 
