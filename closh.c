@@ -7,6 +7,7 @@
 #include <string.h>
 #include <signal.h>
 #include <math.h>
+#include <sys/wait.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -65,21 +66,28 @@ int main() {
         // to implement the rest of closh                     //
         //                                                    //
         // /////////////////////////////////////////////////////
-
+        int status;
         /***** BEGIN TODO *****/
         if(parallel){  // Running the programs in parallel
-        for(int i=0; i<count; i++)   { 
-            if(fork()==0){   // call fork() and check if we are currently in the child process
-                execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
-                exit(0);  // Exit out of the child process
-            }
+            for(int i=0; i<count; i++)   { 
+                if(fork()==0){   // call fork() and check if we are currently in the child process
+                    execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
+                    exit(0);  // Exit out of the child process
+                }
             } 
          
         }   
 
         else if(!parallel){ // Run sequentially 
-    
-            
+            for(int i=0; i<count; i++)   {
+                int id = fork();
+                if(id == 0){   // call fork() and check if we are currently in the child process
+                    execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
+                }
+                else if (id > 0) {
+                    waitpid(getpid(), &status, 1);
+                }
+            } 
         }
         exit(0);    // Exiting out of the shell
 
@@ -91,4 +99,3 @@ int main() {
             
     }
 }
-
