@@ -70,9 +70,14 @@ int main() {
         /***** BEGIN TODO *****/
         if(parallel){  // Running the programs in parallel
             for(int i=0; i<count; i++)   { 
-                if(fork()==0){   // call fork() and check if we are currently in the child process
+                int id = fork();
+                if(id == 0){   // call fork() and check if we are currently in the child process
+                    printf("Child process ID - %d\n", getpid());
                     execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
                     exit(0);  // Exit out of the child process
+                }
+                else if (id > 0) {
+                    printf("Parent process ID - %d\n", getpid());
                 }
             } 
          
@@ -82,10 +87,17 @@ int main() {
             for(int i=0; i<count; i++)   {
                 int id = fork();
                 if(id == 0){   // call fork() and check if we are currently in the child process
+                    printf("Child process ID - %d\n", getpid());
                     execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
+                    exit(0);
                 }
                 else if (id > 0) {
-                    waitpid(getpid(), &status, 1);
+                    int pid = getpid();
+                    printf("Parent process ID - %d\n", pid);
+                    // printf("WHAT IS IT! - %d\n", waitpid(pid, &status, WNOHANG));
+                    while (waitpid(pid, &status, WNOHANG) == 0) {
+
+                    }
                 }
             } 
         }
