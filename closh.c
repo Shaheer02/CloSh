@@ -96,7 +96,9 @@ int main() {
                     printf("Parent process ID - %d\n", pid);
                     // printf("WHAT IS IT! - %d\n", waitpid(pid, &status, WNOHANG));
                     while (waitpid(pid, &status, WNOHANG) == 0) {
-
+                    double elapsedTime = difftime(time(0), now); 
+                    if the elapsedTime is more than or equal to timeout then 
+                    kill the process with kill(id, SIGKILL) 
                     }
                 }
             } 
