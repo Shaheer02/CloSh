@@ -5,6 +5,6 @@
 
 ## Team Members:
 <br/>
-Erik Johnston: Did the work for getting closh running and implementations for parallel and sequential running of processes.
+Erik Johnston 76035344: Did the work for getting closh running and implementations for parallel and sequential running of processes.
 <br/>
-Mike Zhai 55652151
+Mike Zhai 55652151: debug, timeout and everything else.
