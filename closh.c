@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <math.h>
 #include <sys/wait.h>
+#include <time.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -66,11 +67,11 @@ int main() {
         // to implement the rest of closh                     //
         //                                                    //
         // /////////////////////////////////////////////////////
-        int status;
         /***** BEGIN TODO *****/
         if(parallel){  // Running the programs in parallel
             for(int i=0; i<count; i++)   { 
                 int id = fork();
+                time_t now = time(0);
                 if(id == 0){   // call fork() and check if we are currently in the child process
                     printf("Child process ID - %d\n", getpid());
                     execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
@@ -78,6 +79,14 @@ int main() {
                 }
                 else if (id > 0) {
                     printf("Parent process ID - %d\n", getpid());
+                    double elapsedTime = difftime(time(0), now); 
+                    // calculate timeout and kill process if expired
+                    if (timeout != 0 && elapsedTime > timeout) {
+                            printf("Timeout exceeded - %ds", timeout);
+                            kill(id, SIGKILL);
+
+                            break;
+                        }
                 }
             } 
          
@@ -86,6 +95,7 @@ int main() {
         else if(!parallel){ // Run sequentially 
             for(int i=0; i<count; i++)   {
                 int id = fork();
+                time_t now = time(0);
                 if(id == 0){   // call fork() and check if we are currently in the child process
                     printf("Child process ID - %d\n", getpid());
                     execvp(cmdTokens[0], cmdTokens); // Call execvp() to run the process in the child process
@@ -94,11 +104,16 @@ int main() {
                 else if (id > 0) {
                     int pid = getpid();
                     printf("Parent process ID - %d\n", pid);
-                    // printf("WHAT IS IT! - %d\n", waitpid(pid, &status, WNOHANG));
-                    while (waitpid(pid, &status, WNOHANG) == 0) {
-                    double elapsedTime = difftime(time(0), now); 
-                    if the elapsedTime is more than or equal to timeout then 
-                    kill the process with kill(id, SIGKILL) 
+                    // while process is still running we wait until it finishes
+                    while (waitpid(id, NULL, WNOHANG) == 0) {
+                        double elapsedTime = difftime(time(0), now); 
+                        // calculate timeout and kill process if expired
+                        if (timeout != 0 && elapsedTime > timeout) {
+                            printf("Timeout exceeded - %ds", timeout);
+                            kill(id, SIGKILL);
+
+                            break;
+                        }
                     }
                 }
             } 

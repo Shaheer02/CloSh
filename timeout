@@ -1,3 +1,0 @@
-timeout 10s echo "timeout!"
-sleep 15
-EOT
