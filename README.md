@@ -4,6 +4,6 @@
 
 ## Team Members:
 <br/>
-Erik:
+Erik Johnston
 <br/>
 Mike Zhai 55652151
